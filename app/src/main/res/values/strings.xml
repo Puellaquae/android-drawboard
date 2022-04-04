@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Draw</string>
+    <string name="redo">REDO</string>
+    <string name="undo">UNDO</string>
+    <string name="clear">CLEAR</string>
+    <string name="brush">BRUSH</string>
+    <string name="brush_width">Storke Width</string>
+    <string name="color_red">Red</string>
+    <string name="color_green">Green</string>
+    <string name="color_blue">Blue</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="brush_picker">Brush Picker</string>
+    <string name="_3d_touch">Pressure Senitive</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">画图</string>
+    <string name="redo">重做</string>
+    <string name="undo">撤销</string>
+    <string name="clear">清空</string>
+    <string name="brush">画笔</string>
+    <string name="brush_width">画笔宽度</string>
+    <string name="color_red">红</string>
+    <string name="color_green">绿</string>
+    <string name="color_blue">蓝</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="brush_picker">调节画笔</string>
+    <string name="_3d_touch">压力感应</string>
+</resources>
