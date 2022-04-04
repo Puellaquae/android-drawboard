@@ -39,9 +39,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         val transaction = supportFragmentManager.beginTransaction()
                         transaction
-                            //.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                             .add(android.R.id.content, picker)
-                            .addToBackStack("brush_picker")
+                            .addToBackStack("brushPicker")
                             .commit()
                     }
                     true
@@ -50,5 +49,4 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }
