@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
 
-class BrushPicker(val oldBrush: DrawBoard.BrushStyle) : DialogFragment() {
+class BrushPicker(private val oldBrush: DrawBoard.BrushStyle) : DialogFragment() {
     var onNewBrush: ((brush: DrawBoard.BrushStyle) -> Unit)? = null
-        set(value) {
-            field = value
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,9 +52,9 @@ class BrushPicker(val oldBrush: DrawBoard.BrushStyle) : DialogFragment() {
             val dialog = MaterialAlertDialogBuilder(it)
                 .setTitle(R.string.brush_picker)
                 .setView(brushPicker)
-                .setNeutralButton(R.string.cancel) { dialog, which ->
+                .setNeutralButton(R.string.cancel) { _, _ ->
                     // Do Nothing
-                }.setPositiveButton(R.string.ok) { dialog, which ->
+                }.setPositiveButton(R.string.ok) { _, _ ->
                     onNewBrush?.let { it(preview.brushStyle) }
                 }.create()
             addListener(brushPicker)
@@ -71,30 +69,29 @@ class BrushPicker(val oldBrush: DrawBoard.BrushStyle) : DialogFragment() {
         val sliderBlue = brushPicker.findViewById<Slider>(R.id.slider_blue)
         val sliderWidth = brushPicker.findViewById<Slider>(R.id.slider_width)
         val switchTouch = brushPicker.findViewById<SwitchMaterial>(R.id.switch_3d)
-        preview.red = oldBrush.red
+        preview.brushStyle = oldBrush
         sliderRed.value = oldBrush.red.toFloat()
-        preview.green = oldBrush.green
         sliderGreen.value = oldBrush.green.toFloat()
-        preview.blue = oldBrush.blue
         sliderBlue.value = oldBrush.blue.toFloat()
-        preview.width = oldBrush.strokeWidth
         sliderWidth.value = oldBrush.strokeWidth
-        preview.touch = oldBrush.forceTouch
         switchTouch.isChecked = oldBrush.forceTouch
-        sliderRed.addOnChangeListener { slider, value, fromUser ->
+        sliderRed.addOnChangeListener { _, value, _ ->
             preview.red = value.toInt()
         }
-        sliderGreen.addOnChangeListener { slider, value, fromUser ->
+        sliderGreen.addOnChangeListener { _, value, _ ->
             preview.green = value.toInt()
         }
-        sliderBlue.addOnChangeListener { slider, value, fromUser ->
+        sliderBlue.addOnChangeListener { _, value, _ ->
             preview.blue = value.toInt()
         }
-        sliderWidth.addOnChangeListener { slider, value, fromUser ->
+        sliderWidth.addOnChangeListener { _, value, _ ->
             preview.width = value
         }
         switchTouch.setOnClickListener {
             preview.touch = switchTouch.isChecked
+            if (preview.touch && !preview.brushStyle.pressureMeasured) {
+                Toast.makeText(context, R.string.pressure_test, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }

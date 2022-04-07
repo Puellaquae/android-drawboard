@@ -12,4 +12,7 @@
     <string name="cancel">Cancel</string>
     <string name="brush_picker">Brush Picker</string>
     <string name="_3d_touch">Pressure Senitive</string>
+    <string name="pressure_test">Press the below from light to heavy to measure the pressure range</string>
+    <string name="pressure_nonsupport">Your device may not support pressure</string>
+    <string name="pressure_fin">Pressure range has measured</string>
 </resources>

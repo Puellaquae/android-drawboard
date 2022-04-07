@@ -16,10 +16,10 @@
         android:id="@+id/action_redo"
         android:icon="@drawable/ic_baseline_redo_24"
         android:title="@string/redo"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_clear"
         android:icon="@drawable/ic_baseline_delete_24"
         android:title="@string/clear"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

@@ -6,7 +6,6 @@ import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 
@@ -17,7 +16,10 @@ class DrawBoard(context: Context, attrs: AttributeSet) : View(context, attrs),
         var green: Int,
         var blue: Int,
         var strokeWidth: Float,
-        var forceTouch: Boolean = false
+        var forceTouch: Boolean = false,
+        var pressureMeasured: Boolean = false,
+        var pressureMin: Float = 0f,
+        var pressureMax: Float = 1f,
     )
 
     private var paint: Paint = Paint().apply {
@@ -42,7 +44,11 @@ class DrawBoard(context: Context, attrs: AttributeSet) : View(context, attrs),
         for (paths in draws) {
             for ((path, style, force) in paths) {
                 paint.setARGB(255, style.red, style.green, style.blue)
-                paint.strokeWidth = style.strokeWidth * (force * 2.0f + 1.0f)
+                paint.strokeWidth = if (style.forceTouch) {
+                    style.strokeWidth * force
+                } else {
+                    style.strokeWidth
+                }
                 canvas?.drawPath(path, paint)
             }
         }
@@ -52,7 +58,16 @@ class DrawBoard(context: Context, attrs: AttributeSet) : View(context, attrs),
         super.onTouchEvent(event)
         val px = event?.x!!
         val py = event.y
-        val force = event.pressure
+        var force = event.pressure
+        if (brush.pressureMeasured) {
+            if (force > brush.pressureMax) {
+                force = 1f
+            } else if (force < brush.pressureMin) {
+                force = 0f
+            } else {
+                force = (force - brush.pressureMin) / (brush.pressureMax - brush.pressureMin)
+            }
+        }
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 undoDraws.clear()
